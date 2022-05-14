@@ -116,8 +116,15 @@ public class SafetyNetSampleFragment extends Fragment {
          */
         // TODO(developer): Change the nonce generation to include your own, used once value,
         // ideally from your remote server.
-        String nonceData = "Safety Net Sample: " + System.currentTimeMillis();
-        byte[] nonce = getRequestNonce(nonceData);
+
+
+        String nonceData = "Nonce Data: " + System.currentTimeMillis();
+
+////      原始：24 bytes random + fixed String
+//        byte[] nonce = getRequestNonce(nonceData);
+
+//        新：only String
+        byte[] nonce = nonceData.getBytes();
 
         /*
          Call the SafetyNet API asynchronously.
@@ -171,8 +178,9 @@ public class SafetyNetSampleFragment extends Fragment {
                      component of this sample for details on how to verify and parse this result.
                      */
                     mResult = attestationResponse.getJwsResult();
-                    Log.d(TAG, "Success! SafetyNet result:\n" + mResult + "\n");
-
+                    System.out.println(mResult.length());
+//                    Log.d(TAG, "Success! SafetyNet result:\n" + mResult + "\n");
+                    Log.d("nonce", "Success! SafetyNet result:\n" + mResult + "\n");
                         /*
                          TODO(developer): Forward this result to your server together with
                          the nonce for verification.
